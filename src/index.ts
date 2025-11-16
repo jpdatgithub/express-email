@@ -2,14 +2,18 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 
+const API_URL = process.env.API_URL!;
+const API_KEY = process.env.API_KEY!;
+const FRONT_URL = process.env.FRONT_URL!;
+const port = process.env.PORT || 3001;
 
 const app = express();
 app.use(express.json());
-app.use(cors());
-
-const API_URL = process.env.API_URL!;
-const API_KEY = process.env.API_KEY!;
-const port = process.env.PORT || 3001;
+app.use(cors({
+  origin: FRONT_URL,
+  methods: ["POST"],
+  allowedHeaders: ["Content-Type"],
+}));
 
 app.post("/enviar-contato", async (req, res) => {
   try {
